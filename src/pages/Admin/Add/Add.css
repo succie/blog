@@ -1,0 +1,36 @@
+.Add {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Add-Editor {
+  width: 48%;
+  height: 60vh;
+  border: 1px solid red;
+}
+
+.Add-Editor-title {
+  display: block;
+  width: 300px;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: gray;
+}
+
+.Add-Editor-body {
+  display: block;
+  resize: none;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.Add-Preview {
+  width: 48%;
+  border: 1px solid blue;
+  overflow: visible;
+  word-wrap: break-word;
+}

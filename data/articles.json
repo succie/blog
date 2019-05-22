@@ -1,0 +1,23 @@
+[
+  {
+    "title": "令和になった",
+    "body": "あけましておめでとうございます。祝令和!",
+    "genre": "common",
+    "created_at": 1556636400000,
+    "updated_at": 1556636400000
+  },
+  {
+    "title": "令和から次の日",
+    "body": "令和から一日たった",
+    "genre": "technology",
+    "created_at": 1556766012000,
+    "updated_at": 1556766012000
+  },
+  {
+    "title": "な〜んにもない",
+    "body": "なんにもない。",
+    "genre": "common",
+    "created_at": 1556816461000,
+    "updated_at": 1556816463000
+  }
+]

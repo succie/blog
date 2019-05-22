@@ -1,0 +1,14 @@
+.Article-header {
+  padding: 40px 0;
+}
+
+.Article-genre {
+  display: inline-block;
+  margin-bottom: 18px;
+  letter-spacing: .1em;
+}
+
+.Article-title {
+  margin: 0;
+  font-size: 55px;
+}

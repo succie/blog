@@ -1,0 +1,15 @@
+.Page {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 64px);
+}
+
+.Page.is-open-menu {
+  width: calc(100vw - 256px);
+  left: 256px;
+}
+
+.Page > div {
+  width: 90%;
+  margin: 0 auto;
+}
