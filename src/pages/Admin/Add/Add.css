@@ -1,0 +1,43 @@
+.Add-Editor {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Add-Editor-edit {
+  width: 50%;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.Add-Editor-edit-title {
+  display: block;
+  width: 100%;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid #b9b9b9;
+  margin-bottom: 9px;
+  font: inherit;
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.Add-Editor-edit-body {
+  display: block;
+  width: 100%;
+  height: calc(100% - 42px);
+  overflow: auto;
+  white-space: nowrap;
+  word-wrap: break-word;
+  resize: none;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid #b9b9b9;
+}
+
+.Add-Editor-preview {
+  width: 50%;
+  margin-top: 42px;
+  overflow: visible;
+  word-wrap: break-word;
+  border: 1px solid #b9b9b9;
+}
