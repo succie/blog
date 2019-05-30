@@ -12,7 +12,10 @@ export type Article = {
 export enum articlesActionTypes {
   GET_ARTICLES_REQUEST = "GET_ARTICLES_REQUEST",
   GET_ARTICLES_SUCCESS = "GET_ARTICLES_SUCCESS",
-  GET_ARTICLES_FAILED = "GET_ARTICLES_FAILED"
+  GET_ARTICLES_FAILED = "GET_ARTICLES_FAILED",
+  POST_ARTICLES_REQUEST = "POST_ARTICLES_REQUEST",
+  POST_ARTICLES_SUCCESS = "POST_ARTICLES_SUCCESS",
+  POST_ARTICLES_FAILED = "POST_ARTICLES_FAILED"
 }
 
 export const articlesAction = {
@@ -35,6 +38,26 @@ export const articlesAction = {
       error,
       isFetching: false
     };
+  },
+  postArticlesRequest: (article: Article) => {
+    return {
+      type: articlesActionTypes.POST_ARTICLES_REQUEST,
+      article,
+      isFetching: true
+    };
+  },
+  postArticlesSuccess: () => {
+    return {
+      type: articlesActionTypes.POST_ARTICLES_SUCCESS,
+      isFetching: false
+    };
+  },
+  postArticlesFailed: (error: Error) => {
+    return {
+      type: articlesActionTypes.POST_ARTICLES_FAILED,
+      error,
+      isFetching: false
+    };
   }
 };
 
@@ -48,12 +71,24 @@ export function* getArticles() {
   }
 }
 
+// TODO: article を firebase に登録する
+export function* postArticle(action: any) {
+  yield delay(3000);
+  try {
+    yield put(articlesAction.postArticlesSuccess());
+  } catch (err) {
+    yield put(articlesAction.postArticlesFailed(err));
+  }
+}
+
 const articles = (state: Article[] = [], action: any) => {
   switch (action.type) {
     case articlesActionTypes.GET_ARTICLES_SUCCESS:
       return action.articles;
     case articlesActionTypes.GET_ARTICLES_FAILED:
       return action.error;
+    case articlesActionTypes.POST_ARTICLES_REQUEST:
+      return [...state, action.article];
     default:
       return state;
   }
