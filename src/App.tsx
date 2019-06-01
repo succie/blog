@@ -14,10 +14,11 @@ const mapStateToProps = (state: RootState) => {
     menu: state.menu
   };
 };
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getArticles: () => dispatch(articlesAction.getArticlesRequest()),
-    confirmUser: () => dispatch(AuthActions.authConfirmSignInRequest())
+    confirmSignIn: () => dispatch(AuthActions.authConfirmSignInRequest())
   };
 };
 
@@ -28,7 +29,7 @@ class App extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.props.getArticles();
-    this.props.confirmUser();
+    this.props.confirmSignIn();
   }
 
   render() {
