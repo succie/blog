@@ -3,16 +3,19 @@ import createSagaMiddleware from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension";
 import menu, { Menu } from "./menu";
 import articles, { Article } from "./articles";
+import auth, { Auth } from "./auth";
 import rootSaga from "../sagas";
 
 export type RootState = {
   menu: Menu;
   articles: Article[];
+  auth: Auth;
 };
 
 const reducer = combineReducers({
   menu,
-  articles
+  articles,
+  auth
 });
 
 const sagaMiddleware = createSagaMiddleware();

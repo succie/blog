@@ -7,3 +7,6 @@ const firebaseApp = firebase.initializeApp(config);
 
 // Firestore
 export const firestore = firebaseApp.firestore();
+
+// Firebase Authentication
+export const firebaseAuth = firebaseApp.auth();

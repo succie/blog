@@ -2,22 +2,26 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { menuActions } from "../../store/menu";
 import { RootState } from "../../store";
+import { menuActions } from "../../store/menu";
+import { AuthActions } from "../../store/auth";
 import "./Header.css";
 
 const mapStateToProps = (state: RootState) => {
   return {
-    menu: state.menu
+    menu: state.menu,
+    isSignIn: state.auth.isSignIn
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     openMenu: () => dispatch(menuActions.openMenu()),
-    closeMenu: () => dispatch(menuActions.closeMenu())
+    closeMenu: () => dispatch(menuActions.closeMenu()),
+    signout: () => dispatch(AuthActions.authSignOutRequest())
   };
 };
 
@@ -36,6 +40,15 @@ const Header = (props: Props) => {
       <Link to="/" className="Header-title">
         Succie's blog
       </Link>
+      <div className="Header-signout">
+        {props.isSignIn ? (
+          <Button onClick={props.signout}>Sign Out</Button>
+        ) : (
+          <Link to="/signin">
+            <Button>Sign In</Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 };
