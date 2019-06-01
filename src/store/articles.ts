@@ -1,12 +1,12 @@
-import articlesData from "../../data/articles.json";
-import { delay, put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
+import { firestore } from "../utils/firebase";
 
 export type Article = {
   title: string;
   body: string;
   genre: string;
-  created_at: number;
-  updated_at: number;
+  created_at: firebase.firestore.Timestamp;
+  updated_at: firebase.firestore.Timestamp;
 };
 
 export enum articlesActionTypes {
@@ -61,19 +61,30 @@ export const articlesAction = {
   }
 };
 
-// TODO: articles を firebase から持ってくるようにする
+async function fetchFirestore() {
+  const snapShot = await firestore.collection("articles").orderBy("updated_at", "desc").get();
+
+  const data = snapShot.docs.map((doc: any) => {
+    return doc.data();
+  });
+  return data;
+}
+
+async function postFirestore(article: Article) {
+  await firestore.collection("articles").add(article);
+}
+
 export function* getArticles() {
-  yield delay(3000);
+  const articles = yield call(fetchFirestore);
   try {
-    yield put(articlesAction.getArticlesSuccess(articlesData));
+    yield put(articlesAction.getArticlesSuccess(articles));
   } catch (err) {
     yield put(articlesAction.getArticlesFailed(err));
   }
 }
 
-// TODO: article を firebase に登録する
 export function* postArticle(action: any) {
-  yield delay(3000);
+  yield call(postFirestore, action.article);
   try {
     yield put(articlesAction.postArticlesSuccess());
   } catch (err) {
@@ -88,7 +99,7 @@ const articles = (state: Article[] = [], action: any) => {
     case articlesActionTypes.GET_ARTICLES_FAILED:
       return action.error;
     case articlesActionTypes.POST_ARTICLES_REQUEST:
-      return [...state, action.article];
+      return [action.article, ...state];
     default:
       return state;
   }
