@@ -31,9 +31,9 @@ const Index = (props: Props) => {
             <div className="Index-Article-header">
               <time
                 className="Index-Article-createdAt"
-                dateTime={format(article.updated_at, "YYYY-MM-DD HH:mm:ssZ")}
+                dateTime={format(article.updated_at.toDate(), "YYYY-MM-DD HH:mm:ssZ")}
               >
-                {format(article.created_at, "MMM DD").toUpperCase()}
+                {format(article.created_at.toDate(), "MMM DD").toUpperCase()}
               </time>
               {` / ${article.genre.toUpperCase()}`}
             </div>

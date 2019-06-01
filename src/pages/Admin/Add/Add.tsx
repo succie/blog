@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent, useRef } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router";
 import ReactMarkdown from "react-markdown";
-import { getTime } from "date-fns";
+import firebase from "firebase/app";
 import { Article, articlesAction } from "../../../store/articles";
 import "./Add.css";
 
@@ -12,7 +13,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps> & RouteComponentProps;
 
 const Add = (props: Props) => {
   const [title, setTitle] = useState<string>("");
@@ -20,7 +21,7 @@ const Add = (props: Props) => {
   const [genre, setGenre] = useState<string>("common");
 
   const postArticle = () => {
-    const timestamp = getTime(new Date());
+    const timestamp = firebase.firestore.Timestamp.fromDate(new Date());
     const article: Article = {
       title,
       body,
@@ -29,6 +30,7 @@ const Add = (props: Props) => {
       updated_at: timestamp
     };
     props.postArticle(article);
+    props.history.push("/");
   };
 
   return (
