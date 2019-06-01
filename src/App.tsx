@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Menu from "./components/Menu/Menu";
 import { RootState } from "./store";
 import { articlesAction } from "./store/articles";
+import { AuthActions } from "./store/auth";
 import "./App.css";
 
 const mapStateToProps = (state: RootState) => {
@@ -15,7 +16,8 @@ const mapStateToProps = (state: RootState) => {
 };
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getArticles: () => dispatch(articlesAction.getArticlesRequest())
+    getArticles: () => dispatch(articlesAction.getArticlesRequest()),
+    confirmUser: () => dispatch(AuthActions.authConfirmSignInRequest())
   };
 };
 
@@ -26,6 +28,7 @@ class App extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.props.getArticles();
+    this.props.confirmUser();
   }
 
   render() {

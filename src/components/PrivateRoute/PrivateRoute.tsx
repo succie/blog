@@ -5,9 +5,9 @@ import {
   RouteProps,
   RouteComponentProps
 } from "react-router-dom";
-import { firebaseAuth } from "../../utils/firebase";
 
 type ExternalProps = {
+  isSignIn: boolean;
   component:
     | React.ComponentType<RouteComponentProps<any>>
     | React.ComponentType<any>;
@@ -18,13 +18,11 @@ type Props = RouteProps & ExternalProps;
 const PrivateRoute = (props: Props) => {
   const { component: Component, ...rest } = props;
 
-  const isSignin = !!firebaseAuth.currentUser;
-
   return (
     <Route
       {...rest}
       render={p => {
-        return isSignin ? <Component {...p} /> : <Redirect to="/login" />;
+        return props.isSignIn ? <Component {...p} /> : <Redirect to="/signin" />;
       }}
     />
   );
