@@ -1,0 +1,14 @@
+.SignIn {
+  position: relative;
+}
+
+.SignIn h2 {
+  font-size: 44px;
+}
+
+.SignIn-Forms {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+}
