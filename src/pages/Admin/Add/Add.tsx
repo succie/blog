@@ -1,7 +1,11 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import ReactMarkdown from "react-markdown";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import firebase from "firebase/app";
 import { Article, articlesAction } from "../../../store/articles";
 import "./Add.css";
@@ -35,44 +39,49 @@ const Add = (props: Props) => {
 
   return (
     <div className="Add">
-      <select
+      <Select
         value={genre}
         onChange={e => {
-          setGenre(e.currentTarget.value);
+          setGenre(e.target.value as string);
         }}
       >
         {["common", "technology"].map(genre => (
-          <option value={genre} key={genre}>
+          <MenuItem value={genre} key={genre}>
             {genre}
-          </option>
+          </MenuItem>
         ))}
-      </select>
+      </Select>
       <div className="Add-Editor">
         <div className="Add-Editor-edit">
-          <input
+          <TextField
             className="Add-Editor-edit-title"
             type="text"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            onChange={e => {
               setTitle(e.currentTarget.value);
             }}
             defaultValue={title}
             placeholder="Title"
           />
-          <textarea
+          <TextField
             className="Add-Editor-edit-body"
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+            multiline
+            defaultValue={body}
+            onChange={e => {
               setBody(e.currentTarget.value);
             }}
-            defaultValue={body}
+            margin="normal"
+            variant="outlined"
+            label="Body"
+            rows={25}
           />
         </div>
         <div className="Add-Editor-preview">
           <ReactMarkdown source={body} />
         </div>
       </div>
-      <button className="Add-Save" onClick={postArticle}>
-        SAVE
-      </button>
+      <Button className="Add-Save" onClick={postArticle} variant="contained">
+        Save
+      </Button>
     </div>
   );
 };

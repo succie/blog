@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { AuthActions } from "../../store/auth";
+import { Redirect } from "react-router";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { RootState } from "../../store";
+import { AuthActions } from "../../store/auth";
 import "./SignIn.css";
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    isSignIn: state.auth.isSignIn
+  };
+};
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
@@ -12,7 +20,8 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const SignIn = (props: Props) => {
   const [email, setEmail] = useState<string>("");
@@ -21,6 +30,8 @@ const SignIn = (props: Props) => {
   const signIn = () => {
     props.authSignIn(email, password);
   };
+
+  if (props.isSignIn) return <Redirect to="/admin" />;
 
   return (
     <div className="SignIn">
@@ -53,6 +64,6 @@ const SignIn = (props: Props) => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignIn);
