@@ -4,7 +4,8 @@
   "description": "succie's blog",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "storybook": "start-storybook"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,11 +25,13 @@
     "redux-saga": "^1.0.2"
   },
   "devDependencies": {
+    "@storybook/react": "^5.1.3",
     "@types/classnames": "^2.2.7",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
     "@types/react-router-dom": "^4.3.3",
+    "@types/storybook__react": "^4.0.2",
     "css-loader": "^2.1.1",
     "file-loader": "^3.0.1",
     "html-webpack-plugin": "^3.2.0",
