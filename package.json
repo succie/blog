@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook --ci"
   },
   "license": "MIT",
   "dependencies": {
