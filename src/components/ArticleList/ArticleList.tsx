@@ -23,7 +23,7 @@ const ArticleList = ({ articles, className }: Props) => {
             <h3 className="ArticleList-Item-title">{article.title}</h3>
             <section className="ArticleList-Item-label">
               <time>{format(article.updated_at.toDate(), "MMM DD")}</time> /{" "}
-              {article.genre}
+              {article.genre.toUpperCase()}
             </section>
           </section>
         </Link>
