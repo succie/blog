@@ -1,14 +1,15 @@
 import React from "react";
 import { render } from "react-dom";
-import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import { Provider } from "react-redux";
 import store from "./store";
+import Pages from "./pages";
+import "./index.css";
 
 render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <Pages />
     </Provider>
   </BrowserRouter>,
   document.querySelector("#root")
