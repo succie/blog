@@ -15,6 +15,7 @@ body {
 
 * {
   color: var(--text-color);
+  letter-spacing: 0.08em;
 }
 
 a {
