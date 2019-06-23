@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "yarn clean && webpack",
-    "storybook": "start-storybook --ci",
+    "storybook": "start-storybook --ci --port 8081",
     "clean": "rimraf dist/"
   },
   "license": "MIT",
