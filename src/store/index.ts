@@ -1,30 +1,15 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
-import createSagaMiddleware from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension";
-import menu, { Menu } from "./menu";
-import articles, { Article } from "./articles";
-import auth, { Auth } from "./auth";
-import rootSaga from "../sagas";
+import articles, { ArticleReducer } from "./articles";
 
 export type RootState = {
-  menu: Menu;
-  articles: Article[];
-  auth: Auth;
+  articles: ArticleReducer;
 };
 
 const reducer = combineReducers({
-  menu,
-  articles,
-  auth
+  articles
 });
 
-const sagaMiddleware = createSagaMiddleware();
-
-const store = createStore(
-  reducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
-);
-
-sagaMiddleware.run(rootSaga);
+const store = createStore(reducer, composeWithDevTools(applyMiddleware()));
 
 export default store;

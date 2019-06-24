@@ -1,105 +1,94 @@
-import { put, call } from "redux-saga/effects";
-import { firestore } from "../utils/firebase";
+import { firestore } from "firebase/app";
 
 export type Article = {
   title: string;
   body: string;
   genre: string;
-  created_at: firebase.firestore.Timestamp;
-  updated_at: firebase.firestore.Timestamp;
+  created_at: firestore.Timestamp;
+  updated_at: firestore.Timestamp;
 };
 
-export enum articlesActionTypes {
-  GET_ARTICLES_REQUEST = "GET_ARTICLES_REQUEST",
-  GET_ARTICLES_SUCCESS = "GET_ARTICLES_SUCCESS",
-  GET_ARTICLES_FAILED = "GET_ARTICLES_FAILED",
-  POST_ARTICLES_REQUEST = "POST_ARTICLES_REQUEST",
-  POST_ARTICLES_SUCCESS = "POST_ARTICLES_SUCCESS",
-  POST_ARTICLES_FAILED = "POST_ARTICLES_FAILED"
+export enum ArticlesActionTypes {
+  FETCH_ARTICLES_REQUEST = "FETCH_ARTICLES_REQUEST",
+  FETCH_ARTICLES_SUCCESS = "FETCH_ARTICLES_SUCCESS",
+  FETCH_ARTICLES_FAILUER = "FETCH_ARTICLES_FAILUER"
 }
 
-export const articlesAction = {
-  getArticlesRequest: () => {
+type FetchArticlesRequest = {
+  type: ArticlesActionTypes.FETCH_ARTICLES_REQUEST;
+  isFetching: boolean;
+};
+
+type FetchArticlesSuccess = {
+  type: ArticlesActionTypes.FETCH_ARTICLES_SUCCESS;
+  isFetching: boolean;
+  payload: {
+    articles: Article[];
+  };
+};
+
+type FetchArticlesFailuer = {
+  type: ArticlesActionTypes.FETCH_ARTICLES_FAILUER;
+  isFetching: boolean;
+  payload: {
+    error: Error;
+  };
+};
+
+type ArticlesActions =
+  | FetchArticlesRequest
+  | FetchArticlesSuccess
+  | FetchArticlesFailuer;
+
+export const articlesActions = {
+  fetchArticlesRequest: () => {
     return {
-      type: articlesActionTypes.GET_ARTICLES_REQUEST,
+      type: ArticlesActionTypes.FETCH_ARTICLES_REQUEST,
       isFetching: true
     };
   },
-  getArticlesSuccess: (articles: Article[]) => {
+  fetchArticlesSuccess: (articles: Article[]) => {
     return {
-      type: articlesActionTypes.GET_ARTICLES_SUCCESS,
-      articles,
-      isFetching: false
+      type: ArticlesActionTypes.FETCH_ARTICLES_SUCCESS,
+      isFetching: false,
+      payload: {
+        articles
+      }
     };
   },
-  getArticlesFailed: (error: Error) => {
+  fetchArticlesFailuer: (error: Error) => {
     return {
-      type: articlesActionTypes.GET_ARTICLES_FAILED,
-      error,
-      isFetching: false
-    };
-  },
-  postArticlesRequest: (article: Article) => {
-    return {
-      type: articlesActionTypes.POST_ARTICLES_REQUEST,
-      article,
-      isFetching: true
-    };
-  },
-  postArticlesSuccess: () => {
-    return {
-      type: articlesActionTypes.POST_ARTICLES_SUCCESS,
-      isFetching: false
-    };
-  },
-  postArticlesFailed: (error: Error) => {
-    return {
-      type: articlesActionTypes.POST_ARTICLES_FAILED,
-      error,
-      isFetching: false
+      type: ArticlesActionTypes.FETCH_ARTICLES_FAILUER,
+      isFetching: false,
+      payload: {
+        error
+      }
     };
   }
 };
 
-async function fetchFirestore() {
-  const snapShot = await firestore.collection("articles").orderBy("updated_at", "desc").get();
+export type ArticleReducer = {
+  isFetching: boolean;
+  articles?: Article[];
+  error?: Error;
+};
 
-  const data = snapShot.docs.map((doc: any) => {
-    return doc.data();
-  });
-  return data;
-}
+const initialState: ArticleReducer = {
+  isFetching: false,
+  articles: []
+};
 
-async function postFirestore(article: Article) {
-  await firestore.collection("articles").add(article);
-}
-
-export function* getArticles() {
-  const articles = yield call(fetchFirestore);
-  try {
-    yield put(articlesAction.getArticlesSuccess(articles));
-  } catch (err) {
-    yield put(articlesAction.getArticlesFailed(err));
-  }
-}
-
-export function* postArticle(action: any) {
-  yield call(postFirestore, action.article);
-  try {
-    yield put(articlesAction.postArticlesSuccess());
-  } catch (err) {
-    yield put(articlesAction.postArticlesFailed(err));
-  }
-}
-
-const articles = (state: Article[] = [], action: any) => {
+const articles = (state = initialState, action: ArticlesActions) => {
   switch (action.type) {
-    case articlesActionTypes.GET_ARTICLES_SUCCESS:
-      return action.articles;
-    case articlesActionTypes.GET_ARTICLES_FAILED:
-      return action.error;
-    case articlesActionTypes.POST_ARTICLES_REQUEST:
-      return [action.article, ...state];
+    case ArticlesActionTypes.FETCH_ARTICLES_REQUEST:
+      return { isFetching: action.isFetching };
+    case ArticlesActionTypes.FETCH_ARTICLES_SUCCESS:
+      return {
+        isFetching: action.isFetching,
+        articles: action.payload.articles
+      };
+    case ArticlesActionTypes.FETCH_ARTICLES_FAILUER:
+      return { isFetching: action.isFetching, error: action.payload.error };
     default:
       return state;
   }

@@ -1,48 +1,38 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import classnames from "classnames";
-import { format } from "date-fns";
-import { RootState } from "../../store/index.js";
-import "./Index.css";
+import React, { useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { articlesActions, Article } from "../../store/articles";
+import { firestore } from "../../utils/firebase";
+import ArticleList from "../../components/ArticleList/ArticleList";
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    menu: state.menu,
-    articles: state.articles
-  };
-};
+const Index = () => {
+  const articles = useSelector((state: RootState) => state.articles.articles);
 
-type Props = ReturnType<typeof mapStateToProps>;
+  const dispatch = useDispatch();
 
-const Index = (props: Props) => {
-  const cns = classnames("Index", { "menu-is-open": props.menu.isOpen });
+  const articleApi = useCallback(async () => {
+    const snapShot = await firestore
+      .collection("articles")
+      .orderBy("updated_at", "desc")
+      .get();
+    return snapShot.docs.map(doc => doc.data() as Article);
+  }, []);
+
+  const fetchArticles = useCallback(async () => {
+    dispatch(articlesActions.fetchArticlesRequest());
+    const articles = await articleApi();
+    dispatch(articlesActions.fetchArticlesSuccess(articles));
+  }, []);
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
 
   return (
     <div className="Index">
-      <h2 className="Index-title">All Stories</h2>
-      <div className="Index-Articles">
-        {props.articles.map(article => (
-          <Link
-            className="Index-Article"
-            to={`/${article.genre}/${article.title}/`}
-            key={article.title}
-          >
-            <div className="Index-Article-header">
-              <time
-                className="Index-Article-createdAt"
-                dateTime={format(article.updated_at.toDate(), "YYYY-MM-DD HH:mm:ssZ")}
-              >
-                {format(article.created_at.toDate(), "MMM DD").toUpperCase()}
-              </time>
-              {` / ${article.genre.toUpperCase()}`}
-            </div>
-            <h3 className="Index-Article-title">{article.title}</h3>
-          </Link>
-        ))}
-      </div>
+      <ArticleList articles={articles} />
     </div>
   );
 };
 
-export default connect(mapStateToProps)(Index);
+export default Index;

@@ -1,0 +1,31 @@
+.ArticleList {
+  padding: 8px 0;
+}
+
+.ArticleList-Item {
+  display: flex;
+  height: 64px;
+  padding: 0 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.ArticleList-Item:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ArticleList-Item:hover {
+  background-color: var(--background-color-shadow);
+}
+
+.ArticleList-Item-title {
+  margin: 0 0 8px 0;
+}
+
+.ArticleList-Item-label {
+  font-size: 0.8em;
+  color: var(--text-color-light);
+}
