@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { RouteComponentProps } from "react-router";
+import ReactMarkdown from "react-markdown";
+import breaks from "remark-breaks";
 import { format } from "date-fns";
 import { RootState } from "../../store";
-import { RouteComponentProps } from "react-router";
 
 type Props = RouteComponentProps<{ genre: string; title: string }>;
 
@@ -27,7 +29,11 @@ const Article = (props: Props) => {
         </section>
         <h1>{article.title}</h1>
       </header>
-      <article className="Article-body">{article.body}</article>
+      <ReactMarkdown
+        className="Article-body"
+        source={article.body}
+        plugins={[breaks]}
+      />
     </div>
   );
 };
