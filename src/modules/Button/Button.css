@@ -1,0 +1,37 @@
+.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  min-width: 64px;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  vertical-align: middle;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--primary-color);
+  line-height: inherit;
+  outline: none;
+  user-select: none;
+  overflow: hidden;
+  background: transparent;
+  background-position: center;
+  transition: background 0.8s;
+}
+
+.Button:hover {
+  background: var(--primary-color-light)
+    radial-gradient(circle, transparent 1%, var(--primary-color-light) 1%)
+    center/15000%;
+}
+
+.Button:active {
+  background-color: transparent;
+  background-size: 100%;
+  transition: background 0s;
+}
