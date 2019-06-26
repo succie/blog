@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import Button from "../../modules/Button/Button";
 import TextField from "../../modules/TextField/TextField";
-import { firebaseAuth } from "../../utils/firebase";
-import { authActions } from "../../store/auth";
-import "./SignIn.css";
 import { RootState } from "../../store";
+import { authActions } from "../../store/auth";
+import { firebaseAuth } from "../../utils/firebase";
+import "./SignIn.css";
 
 const SignIn = () => {
   const isSignIn = useSelector((state: RootState) => state.auth.isSignIn);
