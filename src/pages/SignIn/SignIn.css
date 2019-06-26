@@ -1,0 +1,9 @@
+.SignIn {
+  position: relative;
+}
+
+.SignIn-Button {
+  margin-top: 15px;
+  position: absolute;
+  right: 0;
+}
