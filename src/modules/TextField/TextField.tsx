@@ -7,8 +7,7 @@ type Props = InputHTMLAttributes<HTMLInputElement>;
 const TextField = ({ className, ...props }: Props) => {
   const [focus, setFocus] = useState(false);
 
-  const cns = clsx("TextField", className);
-  const cns2 = clsx("TextField-bottom-line", { "is-focus": focus });
+  const cns = clsx("TextField", className, { "is-focus": focus });
 
   return (
     <div className={cns}>
@@ -17,7 +16,7 @@ const TextField = ({ className, ...props }: Props) => {
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       />
-      <div className={cns2} />
+      <div className="TextField-bottom-line" />
     </div>
   );
 };
