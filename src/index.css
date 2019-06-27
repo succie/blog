@@ -7,6 +7,9 @@
   --text-color-light2: #d8dbe2;
   --primary-color: #ad343e;
   --primary-color-light: #f7eced;
+
+  --white: #ffffff;
+  --black: #000000;
 }
 
 body {
