@@ -10,7 +10,8 @@ export type Auth = {
 export enum AuthActionTypes {
   FETCH_SIGNIN_REQUEST = "FETCH_SIGNIN_REQUEST",
   FETCH_SIGNIN_SUCCESS = "FETCH_SIGNIN_SUCCESS",
-  FETCH_SIGNIN_FAILUER = "FETCH_SIGNIN_FAILUER"
+  FETCH_SIGNIN_FAILUER = "FETCH_SIGNIN_FAILUER",
+  CONFIRM_SIGNIN = "CONFIRM_SIGNIN"
 }
 
 type FetchSignInRequest = {
@@ -30,11 +31,22 @@ type FetchSignInFailuer = {
   type: AuthActionTypes.FETCH_SIGNIN_FAILUER;
   isFetching: boolean;
   payload: {
-    error: Error;
+    error?: Error;
   };
 };
 
-type AuthActions = FetchSignInRequest | FetchSignInSuccess | FetchSignInFailuer;
+type ConfirmSignIn = {
+  type: AuthActionTypes.CONFIRM_SIGNIN;
+  payload: {
+    isSignIn: boolean;
+  };
+};
+
+type AuthActions =
+  | FetchSignInRequest
+  | FetchSignInSuccess
+  | FetchSignInFailuer
+  | ConfirmSignIn;
 
 export const authActions = {
   fetchSignInRequest: () => {
@@ -54,12 +66,20 @@ export const authActions = {
       }
     };
   },
-  fetchSignInFailuer: (error: Error) => {
+  fetchSignInFailuer: (error?: Error) => {
     return {
       type: AuthActionTypes.FETCH_SIGNIN_FAILUER,
       isFetching: false,
       payload: {
         error
+      }
+    };
+  },
+  confirmSignIn: (isSignIn: boolean) => {
+    return {
+      type: AuthActionTypes.CONFIRM_SIGNIN,
+      payload: {
+        isSignIn
       }
     };
   }
@@ -85,6 +105,11 @@ const auth = (state = initialState, action: AuthActions) => {
         ...state,
         isFetching: action.isFetching,
         error: action.payload.error
+      };
+    case AuthActionTypes.CONFIRM_SIGNIN:
+      return {
+        ...state,
+        isSignIn: action.payload.isSignIn
       };
     default:
       return state;
