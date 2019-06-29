@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import { firestore } from "../../utils/firebase";
 import { Article } from "../../store/articles";
 
-const Add = () => {
+const New = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [genre, setGenre] = useState("");
@@ -41,4 +41,4 @@ const Add = () => {
   );
 };
 
-export default Add;
+export default New;
