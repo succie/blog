@@ -1,13 +1,11 @@
 .Select-Wrapper {
   position: relative;
-  width: 100%;
   display: inline-flex;
   box-sizing: border-box;
   overflow: hidden;
   align-items: center;
   background-color: var(--white);
   border-radius: 4px 4px 0 0;
-  margin: 10px;
 }
 
 .Select {
@@ -23,6 +21,7 @@
   cursor: pointer;
   border-radius: 4px 4px 0 0;
   appearance: none;
+  -webkit-appearance: none;
   font-size: 1em;
 }
 

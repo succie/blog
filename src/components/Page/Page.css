@@ -1,4 +1,5 @@
 .Page {
   width: 80vw;
   margin: 24px auto;
+  position: relative;
 }

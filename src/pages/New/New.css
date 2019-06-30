@@ -1,0 +1,52 @@
+.New-Title-Genre-Form {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.New-Title-Form {
+  flex-grow: 1;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.New-Article-Editor {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.New-Article-Editor-Textarea {
+  flex-grow: 1;
+  resize: none;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.New-Article-Editor-Preview {
+  width: 50%;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+}
+
+.New-Article-Post {
+  position: absolute;
+  right: 0;
+  margin: 10px 0;
+}
+
+@media screen and (max-width: 896px) {
+  .New-Title-Genre-Form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .New-Title-Form {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  .New-Article-Editor-Preview {
+    display: none;
+  }
+}
